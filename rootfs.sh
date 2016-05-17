@@ -2,7 +2,7 @@
 #!/bin/sh
 mkdir /tmp/TableX
 mount -t tmpfs none /tmp/TableX -o size=1024M
-debootstrap --arch=armhf --foreign trusty /tmp/TableX
+debootstrap --arch=armhf --foreign xenial /tmp/TableX
 cp /usr/bin/qemu-arm-static /tmp/TableX/usr/bin
 cp /etc/resolv.conf /tmp/TableX
 > config.sh
@@ -10,10 +10,10 @@ cat <<+ > config.sh
 #!/bin/sh
 /debootstrap/debootstrap --second-stage
 export LANG=C
-echo "deb http://ports.ubuntu.com/ trusty main restricted universe multiverse" > /etc/apt/sources.list
-echo "deb http://ports.ubuntu.com/ trusty-security main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb http://ports.ubuntu.com/ trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb http://ports.ubuntu.com/ trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://ports.ubuntu.com/ xenial main restricted universe multiverse" > /etc/apt/sources.list
+echo "deb http://ports.ubuntu.com/ xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://ports.ubuntu.com/ xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://ports.ubuntu.com/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "Europe/Berlin" > /etc/timezone
 echo TableX > /etc/hostname
