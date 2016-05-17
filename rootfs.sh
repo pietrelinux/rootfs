@@ -23,7 +23,8 @@ APT::Install-Recommends "0";
 APT::Install-Suggests "0";
 apt-get update
 apt-get -y upgrade -y
-apt-get install locales -y
+apt-get install -y locales software-properties-common -y isc-dhcp-client ubuntu-minimal ssh cifs-utils screen wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lxde
+
 locale-gen en_GB.UTF-8
 locale-gen es_ES.UTF-8
 export LC_ALL="en_GB.UTF-8"
