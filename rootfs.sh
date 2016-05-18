@@ -1,7 +1,7 @@
 
 #!/bin/sh
 mkdir /tmp/TableX
-mount -t tmpfs none /tmp/TableX -o size=1024M
+mount -t tmpfs none /tmp/TableX -o size=1800M
 debootstrap --arch=armhf --foreign xenial /tmp/TableX
 cp /usr/bin/qemu-arm-static /tmp/TableX/usr/bin
 cp /etc/resolv.conf /tmp/TableX
@@ -18,13 +18,10 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "Europe/Berlin" > /etc/timezone
 echo TableX > /etc/hostname
 echo "127.0.0.1       TableX localhost" >> /etc/hosts
-cat <<END > /etc/apt/apt.conf.d/71-no-recommends
-APT::Install-Recommends "0";
-APT::Install-Suggests "0";
-END
+
 apt-get update
 apt-get -y upgrade -y
-apt-get install -y locales software-properties-common -y isc-dhcp-client ubuntu-minimal ssh cifs-utils screen wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lxde
+apt-get install -y locales software-properties-common -y isc-dhcp-client ubuntu-minimal ssh cifs-utils screen wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lubuntu-desktop
 
 locale-gen en_GB.UTF-8
 locale-gen es_ES.UTF-8
@@ -32,9 +29,12 @@ export LC_ALL="en_GB.UTF-8"
 update-locale LC_ALL=en_GB.UTF-8 LANG=en_GB.UTF-8 LC_MESSAGES=POSIX
 dpkg-reconfigure locales
 dpkg-reconfigure -f noninteractive tzdata
-
+cat <<END > /etc/apt/apt.conf.d/71-no-recommends
+APT::Install-Recommends "0";
+APT::Install-Suggests "0";
 END
 +
+
 chmod +x config.sh
 cp config.sh /tmp/TableX/home
 sudo mount -o bind /dev /tmp/TableX/dev
@@ -43,4 +43,4 @@ sudo mount -t sysfs /sys /tmp/TableX/sys
 sudo mount -t proc /proc /tmp/TableX/proc
 chroot /tmp/TableX /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh
 exit
-sudo tar -czvf Tablex.tar.gz  /tmp/TableX/ 
+tar -czvf Tablex.tar.gz  /tmp/TableX/ 
