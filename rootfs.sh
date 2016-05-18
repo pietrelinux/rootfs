@@ -21,6 +21,7 @@ echo "127.0.0.1       TableX localhost" >> /etc/hosts
 cat <<END > /etc/apt/apt.conf.d/71-no-recommends
 APT::Install-Recommends "0";
 APT::Install-Suggests "0";
+END
 apt-get update
 apt-get -y upgrade -y
 apt-get install -y locales software-properties-common -y isc-dhcp-client ubuntu-minimal ssh cifs-utils screen wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lxde
