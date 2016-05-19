@@ -21,7 +21,7 @@ echo "127.0.0.1       TableX localhost" >> /etc/hosts
 
 apt-get update
 apt-get -y upgrade -y
-apt-get install -y locales software-properties-common -y isc-dhcp-client ubuntu-minimal ssh cifs-utils screen wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lubuntu-desktop
+apt-get install -y locales software-properties-common -y isc-dhcp-client ubuntu-minimal ssh cifs-utils screen gedit wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lubuntu-desktop
 
 locale-gen en_GB.UTF-8
 locale-gen es_ES.UTF-8
