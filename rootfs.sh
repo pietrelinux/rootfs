@@ -52,3 +52,4 @@ sudo mount -t sysfs /sys /mnt/tmp/sys
 sudo mount -t proc /proc /mnt/proc
 chroot /mnt /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh
 exit
+./endrootfs.sh
