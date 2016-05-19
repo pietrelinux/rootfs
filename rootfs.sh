@@ -35,8 +35,16 @@ APT::Install-Recommends "0";
 APT::Install-Suggests "0";
 END
 +
+> endrootfs.sh
+cat <<+ > endrootfs.sh
+tar -czvf Tablex.tar.gz  ubuntu.img 
+sudo umount /mnt/dev/pts
+sudo umount /mnt/sys
+sudo umount /mnt/proc
+sudo umount /mnt/dev
+sudo umount /mnt
 
-chmod +x config.sh
+chmod +x config.sh endrootfs.sh
 cp config.sh /mnt/home
 sudo mount -o bind /dev /mnt/dev
 sudo mount -o bind /dev/pts /mnt/dev/pts
@@ -44,10 +52,3 @@ sudo mount -t sysfs /sys /mnt/tmp/sys
 sudo mount -t proc /proc /mnt/proc
 chroot /mnt /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh
 exit
-umount /mnt
-tar -czvf Tablex.tar.gz  ubuntu.img 
-sudo umount /mnt/dev/pts
-sudo umount /mnt/sys
-sudo umount /mnt/proc
-sudo umount /mnt/dev
-sudo umount /mnt
