@@ -1,10 +1,11 @@
 
 #!/bin/sh
-mkdir /tmp/TableX
-mount -t tmpfs none /tmp/TableX -o size=1800M
-debootstrap --arch=armhf --foreign trusty /tmp/TableX
-cp /usr/bin/qemu-arm-static /tmp/TableX/usr/bin
-cp /etc/resolv.conf /tmp/TableX
+dd if=/dev/zero of=ubuntu.img bs=1MB count=0 seek=4096
+mke2fs -F ubuntu.img
+sudo mount -o loop ubuntu.img /mnt
+debootstrap --arch=armhf --foreign trusty /mnt
+cp /usr/bin/qemu-arm-static /mnt/usr/bin
+cp /etc/resolv.conf /mnt/etc
 > config.sh
 cat <<+ > config.sh
 #!/bin/sh
@@ -36,11 +37,12 @@ END
 +
 
 chmod +x config.sh
-cp config.sh /tmp/TableX/home
-sudo mount -o bind /dev /tmp/TableX/dev
-sudo mount -o bind /dev/pts /tmp/TableX/dev/pts
-sudo mount -t sysfs /sys /tmp/TableX/sys
-sudo mount -t proc /proc /tmp/TableX/proc
-chroot /tmp/TableX /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh
+cp config.sh /mnt/home
+sudo mount -o bind /dev /mnt/dev
+sudo mount -o bind /dev/pts /mnt/dev/pts
+sudo mount -t sysfs /sys /mnt/tmp/sys
+sudo mount -t proc /proc /mnt/proc
+chroot /mnt /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh
 exit
-tar -czvf Tablex.tar.gz  /tmp/TableX/ 
+umount /mnt
+tar -czvf Tablex.tar.gz  ubuntu.img 
