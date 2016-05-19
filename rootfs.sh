@@ -27,7 +27,7 @@ apt-get install -y locales software-properties-common -y isc-dhcp-client ubuntu-
 locale-gen en_GB.UTF-8
 locale-gen es_ES.UTF-8
 export LC_ALL="en_GB.UTF-8"
-update-locale LC_ALL=en_GB.UTF-8 LANG=en_GB.UTF-8 LC_MESSAGES=POSIX
+update-locale LC_ALL=es_ES.UTF-8 LANG=es_ES.UTF-8 LC_MESSAGES=POSIX
 dpkg-reconfigure locales
 dpkg-reconfigure -f noninteractive tzdata
 cat <<END > /etc/apt/apt.conf.d/71-no-recommends
