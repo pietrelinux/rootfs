@@ -46,3 +46,8 @@ chroot /mnt /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh
 exit
 umount /mnt
 tar -czvf Tablex.tar.gz  ubuntu.img 
+sudo umount /mnt/dev/pts
+sudo umount /mnt/sys
+sudo umount /mnt/proc
+sudo umount /mnt/dev
+sudo umount /mnt
