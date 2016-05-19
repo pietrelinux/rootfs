@@ -48,7 +48,7 @@ chmod +x config.sh endrootfs.sh
 cp config.sh /mnt/home
 sudo mount -o bind /dev /mnt/dev
 sudo mount -o bind /dev/pts /mnt/dev/pts
-sudo mount -t sysfs /sys /mnt/tmp/sys
+sudo mount -t sysfs /sys /mnt/sys
 sudo mount -t proc /proc /mnt/proc
 chroot /mnt /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh
 exit
