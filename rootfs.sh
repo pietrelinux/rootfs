@@ -43,7 +43,7 @@ sudo umount /mnt/sys
 sudo umount /mnt/proc
 sudo umount /mnt/dev
 sudo umount /mnt
-
++
 chmod +x config.sh endrootfs.sh
 cp config.sh /mnt/home
 sudo mount -o bind /dev /mnt/dev
