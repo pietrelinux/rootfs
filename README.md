@@ -1,2 +1,2 @@
-# rootfs
-Create rootfs ubuntu trusty
+### rootfs
+Create rootfs complete in a mmcblk0p2 
