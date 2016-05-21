@@ -1,8 +1,17 @@
-
 #!/bin/sh
-dd if=/dev/zero of=ubuntu.img bs=1MB count=0 seek=4096
-mke2fs -F ubuntu.img
-sudo mount -o loop ubuntu.img /mnt
+umount /dev/mmcblk0p2
+mkfs.ext4 /dev/mmcblk0p2
+e2label /dev/mmcblk0p2 TableX
+mount /dev/mmcblk0p2 /mnt
+> endrootfs.sh
+cat <<+ > endrootfs.sh
+umount /mnt/dev/pts
+umount /mnt/sys
+umount /mnt/proc
+umount /mnt/dev
+dd if=/mnt of=TableX.img bs=1M
+umount /mnt
++
 debootstrap --arch=armhf --foreign trusty /mnt
 cp /usr/bin/qemu-arm-static /mnt/usr/bin
 cp /etc/resolv.conf /mnt/etc
@@ -17,32 +26,37 @@ echo "deb http://ports.ubuntu.com/ trusty-updates main restricted universe multi
 echo "deb http://ports.ubuntu.com/ trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "Europe/Berlin" > /etc/timezone
-echo TableX > /etc/hostname
-echo "127.0.0.1       TableX localhost" >> /etc/hosts
-
-apt-get update
-apt-get -y upgrade -y
-apt-get install -y locales software-properties-common -y isc-dhcp-client ubuntu-minimal ssh cifs-utils screen gedit wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lubuntu-desktop
-
-locale-gen en_GB.UTF-8
-locale-gen es_ES.UTF-8
-export LC_ALL="en_GB.UTF-8"
-update-locale LC_ALL=es_ES.UTF-8 LANG=es_ES.UTF-8 LC_MESSAGES=POSIX
-dpkg-reconfigure locales
-dpkg-reconfigure -f noninteractive tzdata
+echo "TableX" >> /etc/hostname
+echo "127.0.0.1 TableX localhost
+::1 ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts" >> /etc/hosts
+echo "auto lo
+iface lo inet loopback" >> /etc/network/interfaces
+echo "/dev/mmcblk0p2 /	   ext4	    errors=remount-ro,noatime,nodiratime 0 1" >> /etc/fstab
+echo "tmpfs    /tmp        tmpfs    nodev,nosuid,mode=1777 0 0" >> /etc/fstab
+echo "tmpfs    /var/tmp    tmpfs    defaults    0 0" >> /etc/fstab
+sync			
 cat <<END > /etc/apt/apt.conf.d/71-no-recommends
 APT::Install-Recommends "0";
 APT::Install-Suggests "0";
 END
-+
-> endrootfs.sh
-cat <<+ > endrootfs.sh
-tar -czvf Tablex.tar.gz  ubuntu.img 
-sudo umount /mnt/dev/pts
-sudo umount /mnt/sys
-sudo umount /mnt/proc
-sudo umount /mnt/dev
-sudo umount /mnt
+
+apt-get update
+apt-get upgrade -y
+apt-get install -y locales dialog software-properties-common makedev isc-dhcp-client ubuntu-minimal ssh cifs-utils screen gedit wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware xubuntu-desktop
+
+locale-gen en_GB.UTF-8
+locale-gen es_ES.UTF-8
+export LC_ALL="es_ES.UTF-8"
+update-locale LC_ALL=es_ES.UTF-8 LANG=es_ES.UTF-8 LC_MESSAGES=POSIX
+dpkg-reconfigure locales
+dpkg-reconfigure -f noninteractive tzdata
+adduser TableX
+exit
 +
 chmod +x config.sh endrootfs.sh
 cp config.sh /mnt/home
@@ -52,4 +66,3 @@ sudo mount -t sysfs /sys /mnt/sys
 sudo mount -t proc /proc /mnt/proc
 chroot /mnt /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh
 exit
-./endrootfs.sh
