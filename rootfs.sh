@@ -47,7 +47,7 @@ END
 
 apt-get update
 apt-get upgrade -y
-apt-get install -y locales dialog software-properties-common makedev isc-dhcp-client ubuntu-minimal ssh cifs-utils screen gedit wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lubuntu-desktop audacious vlc
+apt-get install -y locales dialog software-properties-common makedev isc-dhcp-client ubuntu-minimal ssh cifs-utils screen gedit wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware lubuntu-desktop onboard vlc
 
 locale-gen en_GB.UTF-8
 locale-gen es_ES.UTF-8
