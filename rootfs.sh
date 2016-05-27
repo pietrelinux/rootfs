@@ -1,17 +1,7 @@
 #!/bin/sh
-umount /dev/mmcblk0p2
-mkfs.ext4 /dev/mmcblk0p2
-e2label /dev/mmcblk0p2 TableX
-mount /dev/mmcblk0p2 /mnt
-> endrootfs.sh
-cat <<+ > endrootfs.sh
-umount /mnt/dev/pts
-umount /mnt/sys
-umount /mnt/proc
-umount /mnt/dev
-dd if=/mnt of=TableX.img bs=1M
-umount /mnt
-+
+dd if=/dev/zero of=rootfs.img bs=1 count=0 seek=3000M
+mkfs.ext4 -b 4096 -F rootfs.img
+mount -o loop rootfs.img /mnt
 debootstrap --arch=armhf --foreign trusty /mnt
 cp /usr/bin/qemu-arm-static /mnt/usr/bin
 cp /etc/resolv.conf /mnt/etc
@@ -55,10 +45,10 @@ export LC_ALL="es_ES.UTF-8"
 update-locale LC_ALL=es_ES.UTF-8 LANG=es_ES.UTF-8 LC_MESSAGES=POSIX
 dpkg-reconfigure locales
 dpkg-reconfigure -f noninteractive tzdata
-adduser TableX
+passwd
 exit
 +
-chmod +x config.sh endrootfs.sh
+chmod +x config.sh 
 cp config.sh /mnt/home
 sudo mount -o bind /dev /mnt/dev
 sudo mount -o bind /dev/pts /mnt/dev/pts
