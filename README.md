@@ -1,2 +1,2 @@
-### rootfs
-Create rootfs complete in a mmcblk0p2 
+## rootfs
+This script download and prepare a file system of ubuntu 14.04 armhf
