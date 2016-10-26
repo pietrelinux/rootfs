@@ -1,4 +1,8 @@
 #!/bin/sh
+echo ## Instalando dependencias##
+apt-get update
+apt-get install -y build-essential bin86 kernel-package libqt4-dev wget libncurses5 libncurses5-dev qt4-dev-tools libqt4-dev zlib1g-dev gcc-arm-linux-gnueabihf git debootstrap u-boot-tools device-tree-compiler libusb-1.0-0-dev android-tools-adb android-tools-fastboot qemu-user-static
+
 dd if=/dev/zero of=rootfs.img bs=1 count=0 seek=3000M
 mkfs.ext4 -b 4096 -F rootfs.img
 mount -o loop rootfs.img /mnt
