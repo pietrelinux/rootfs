@@ -44,7 +44,8 @@ cat <<END > /etc/apt/apt.conf.d/71-no-recommends
 APT::Install-Recommends "0";
 APT::Install-Suggests "0";
 END
-
+echo "Actualizando e instalando el sistema"
+sleep 3
 apt-get update
 apt-get upgrade -y
 apt-get install -y locales dialog software-properties-common makedev isc-dhcp-client ubuntu-minimal ssh cifs-utils screen gedit wireless-tools iw curl libncurses5-dev cpufrequtils rcs aptitude make bc lzop man-db ntp usbutils pciutils lsof most sysfsutils linux-firmware git build-essential autoconf libtool debhelper dh-autoreconf fakeroot pkg-config automake xutils-dev libx11-dev libxext-dev libdrm-dev x11proto-dri2-dev libxfixes-dev lubuntu-desktop onboard vlc
