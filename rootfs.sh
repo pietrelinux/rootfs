@@ -67,5 +67,5 @@ sudo mount -o bind /dev /mnt/dev
 sudo mount -o bind /dev/pts /mnt/dev/pts
 sudo mount -t sysfs /sys /mnt/sys
 sudo mount -t proc /proc /mnt/proc
-chroot /mnt /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh && umount && /mnt/{sys,proc,dev/pts,dev}
+chroot /mnt /usr/bin/qemu-arm-static /bin/sh -i ./home/config.sh && exit && umount && /mnt/{sys,proc,dev/pts,dev} && umount /mnt
 exit
