@@ -1,14 +1,14 @@
 #!/bin/sh
-echo " Instalando dependencias"
+echo "Instalando dependencias"
 sleep 3
 apt-get update
 apt-get install -y build-essential bin86 kernel-package libqt4-dev wget libncurses5 libncurses5-dev qt4-dev-tools libqt4-dev zlib1g-dev gcc-arm-linux-gnueabihf git debootstrap u-boot-tools device-tree-compiler libusb-1.0-0-dev android-tools-adb android-tools-fastboot qemu-user-static
 
-echo " Creando imagen"
+echo "Creando imagen"
 sleep 3
 mkdir /tmp/ramdisk
-mount -t tmpfs none /tmp/ramdisk -o size=1200M
-dd if=/dev/zero of=/tmp/ramdisk/rootfs.img bs=1 count=0 seek=1100M
+mount -t tmpfs none /tmp/ramdisk -o size=800M
+dd if=/dev/zero of=/tmp/ramdisk/rootfs.img bs=1 count=0 seek=800M
 mkfs.ext4 -b 4096 -F /tmp/ramdisk/rootfs.img
 chmod 777 /tmp/ramdisk/rootfs.img
 mount -o loop /tmp/ramdisk/rootfs.img /TableX
