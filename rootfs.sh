@@ -1,22 +1,24 @@
 #!/bin/sh
-echo "Instalando dependencias"
-sleep 3
 apt-get update
-apt-get install -y build-essential bin86 kernel-package libqt4-dev wget libncurses5 libncurses5-dev qt4-dev-tools libqt4-dev zlib1g-dev gcc-arm-linux-gnueabihf git debootstrap u-boot-tools device-tree-compiler libusb-1.0-0-dev android-tools-adb android-tools-fastboot qemu-user-static
-
-echo "Creando imagen"
-sleep 3
+apt-get install -y gcc-arm-linux-gnueabihf git debootstrap qemu-user-static 
 mkdir /tmp/ramdisk
-mount -t tmpfs none /tmp/ramdisk -o size=800M
-dd if=/dev/zero of=/tmp/ramdisk/rootfs.img bs=1 count=0 seek=800M
+mount -t tmpfs none /tmp/ramdisk -o size=1800M
+dd if=/dev/zero of=/tmp/ramdisk/rootfs.img bs=1 count=0 seek=1700M
 mkfs.ext4 -b 4096 -F /tmp/ramdisk/rootfs.img
 chmod 777 /tmp/ramdisk/rootfs.img
+mkdir /TableX
 mount -o loop /tmp/ramdisk/rootfs.img /TableX
 echo "Iniciando proceso deboostrap"
 sleep 3
 debootstrap --arch=armhf --foreign trusty /TableX
 cp /usr/bin/qemu-arm-static /TableX/usr/bin
 cp /etc/resolv.conf /TableX/etc
+#cp /home/sunxi/kernel/zImage /TableX/boot
+#cp /home/sunxi/dts
+#cp -r /home/sunxi/modules       /TableX/
+#cp /home/sunxi/dts/sun8i-a33-q8-tablet.dtb /TableX/boot
+
+# rm -r /home/sunxi/modules
 > config.sh
 cat <<+ > config.sh
 #!/bin/sh
@@ -58,7 +60,7 @@ export LC_ALL="es_ES.UTF-8"
 update-locale LC_ALL=es_ES.UTF-8 LANG=es_ES.UTF-8 LC_MESSAGES=POSIX
 dpkg-reconfigure locales
 dpkg-reconfigure -f noninteractive tzdata
-apt-get install -y lxde
+apt-get install -y lubuntu-desktop
 adduser usuario --disabled-password
 addgroup usuario sudo
 exit
